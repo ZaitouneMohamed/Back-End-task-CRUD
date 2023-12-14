@@ -20,7 +20,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource("task", TaskController::class)->middleware("auth:sanctum");
+Route::apiResource("task", TaskController::class);
 
 Route::controller(AuthController::class)->group(function () {
     Route::middleware("guest")->group(function () {
