@@ -34,7 +34,8 @@ class TaskController extends Controller
         Task::create([
             'title' => $request->title,
             'description' => $request->description,
-            'date' => $request->date
+            'date' => $request->date,
+            'user_id' => auth()->user()->id
         ]);
         return response()->json([
             "success" => "task create with success"

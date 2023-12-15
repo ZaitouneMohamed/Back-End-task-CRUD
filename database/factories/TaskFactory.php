@@ -17,11 +17,11 @@ class TaskFactory extends Factory
     public function definition(): array
     {
         return [
-            //
             'title' => $this->faker->sentence(),
             'description' => $this->faker->paragraph(),
             'status' => $this->faker->numberBetween(0, 1),
-            'date' => $this->faker->date($format = 'Y-m-d', $min = 'now')
+            'date' => $this->faker->date($format = 'Y-m-d', $min = 'now'),
+            'user_id' => $this->faker->numberBetween(1, 10),
         ];
     }
 }
