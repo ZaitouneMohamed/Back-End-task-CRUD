@@ -17,7 +17,7 @@ class TaskController extends Controller
 
     public function index()
     {
-        $tasks = Task::latest()->paginate(1);
+        $tasks = Task::latest()->paginate(2);
         return response()->json($tasks);
     }
 
