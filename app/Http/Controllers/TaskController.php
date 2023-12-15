@@ -35,7 +35,8 @@ class TaskController extends Controller
             'title' => $request->title,
             'description' => $request->description,
             'date' => $request->date,
-            'user_id' => auth()->user()->id
+            // 'user_id' => auth()->user()->id
+            'user_id' => 1
         ]);
         return response()->json([
             "success" => "task create with success"
