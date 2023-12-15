@@ -27,22 +27,20 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        return response()->json(Auth::user());
-        // $request->validate([
-        //     'title' => 'required|unique:tasks,title|max:200',
-        //     'description' => 'required|max:2000',
-        //     'date' => 'required|date|after:today',
-        // ]);
-        // Task::create([
-        //     'title' => $request->title,
-        //     'description' => $request->description,
-        //     'date' => $request->date,
-        //     // 'user_id' => auth()->user()->id
-        //     'user_id' => 1
-        // ]);
-        // return response()->json([
-        //     "success" => "task create with success"
-        // ]);
+        $request->validate([
+            'title' => 'required|unique:tasks,title|max:200',
+            'description' => 'required|max:2000',
+            'date' => 'required|date|after:today',
+        ]);
+        Task::create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'date' => $request->date,
+            'user_id' => Auth::user()->id
+        ]);
+        return response()->json([
+            "success" => "task create with success"
+        ]);
     }
 
     /**
