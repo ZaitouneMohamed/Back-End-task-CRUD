@@ -12,12 +12,12 @@ class TaskController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:sanctum');
+        // $this->middleware('auth:sanctum');
     }
 
     public function index()
     {
-        $tasks = Task::latest()->paginate(8);
+        $tasks = Task::latest()->with("user")->paginate(8);
         return response()->json($tasks);
     }
 
