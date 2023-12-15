@@ -24,6 +24,7 @@ class AuthController extends Controller
         $token = $user->createToken("auth-token");
         return response()->json([
             "messages" => "Account Created Successfly",
+            "user" => $user,
             "token" => $token->plainTextToken,
         ]);
     }
@@ -40,6 +41,7 @@ class AuthController extends Controller
                 return response()->json([
                     "message" => "user exist",
                     "token" => $token->plainTextToken,
+                    "user" => $user,
                 ]);
             } else {
                 return response()->json([
