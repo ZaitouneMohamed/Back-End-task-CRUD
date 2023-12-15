@@ -16,9 +16,16 @@ class TaskController extends Controller
         $this->middleware('auth:sanctum');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $tasks = Task::latest()->with("user")->paginate(8);
+        $tasks = Task::latest()->with("user");
+        if ($request->statue) {
+            $tasks->where('statue',$request->statue);
+        };
+        if ($request->search) {
+            $tasks->where('title','like','%'.$request->search.'%');
+        }
+        $tasks = $tasks->paginate(8);
         return response()->json($tasks);
     }
 
