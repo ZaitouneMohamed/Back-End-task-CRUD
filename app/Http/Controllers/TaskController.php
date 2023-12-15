@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Task;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
@@ -26,21 +27,22 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'title' => 'required|unique:tasks,title|max:200',
-            'description' => 'required|max:2000',
-            'date' => 'required|date|after:today',
-        ]);
-        Task::create([
-            'title' => $request->title,
-            'description' => $request->description,
-            'date' => $request->date,
-            // 'user_id' => auth()->user()->id
-            'user_id' => 1
-        ]);
-        return response()->json([
-            "success" => "task create with success"
-        ]);
+        return response()->json(Auth::user());
+        // $request->validate([
+        //     'title' => 'required|unique:tasks,title|max:200',
+        //     'description' => 'required|max:2000',
+        //     'date' => 'required|date|after:today',
+        // ]);
+        // Task::create([
+        //     'title' => $request->title,
+        //     'description' => $request->description,
+        //     'date' => $request->date,
+        //     // 'user_id' => auth()->user()->id
+        //     'user_id' => 1
+        // ]);
+        // return response()->json([
+        //     "success" => "task create with success"
+        // ]);
     }
 
     /**
