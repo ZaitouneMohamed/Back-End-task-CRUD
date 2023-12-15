@@ -20,10 +20,10 @@ class TaskController extends Controller
     {
         $tasks = Task::latest()->with("user");
         if ($request->statue) {
-            $tasks->where('statue',$request->statue);
+            $tasks->where('status', $request->statue);
         };
         if ($request->search) {
-            $tasks->where('title','like','%'.$request->search.'%');
+            $tasks->where('title', 'like', '%' . $request->search . '%');
         }
         $tasks = $tasks->paginate(8);
         return response()->json($tasks);
