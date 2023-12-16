@@ -18,7 +18,7 @@ class TaskController extends Controller
 
     public function index(Request $request)
     {
-        $tasks = Task::with("user");
+        $tasks = Task::latest()->with("user");
         if ($request->has('status')) {
             $tasks->where('status', $request->status);
         }
