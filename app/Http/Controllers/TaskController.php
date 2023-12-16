@@ -26,13 +26,16 @@ class TaskController extends Controller
             $tasks->where('title', 'like', '%' . $request->search . '%');
         }
         $tasks = $tasks->paginate(8);
-        // Check ownership for each task and add an 'is_owner' attribute
-        $tasks->getCollection()->transform(function ($task) {
-            $task['is_owner'] = $task->user_id === Auth::id();
+        $isOwner = function ($task) {
+            return $task->user_id === Auth::id();
+        };
+        $tasks->getCollection()->transform(function ($task) use ($isOwner) {
+            $task['is_owner'] = $isOwner($task);
             return $task;
         });
         return response()->json($tasks);
     }
+
 
 
 
