@@ -19,13 +19,28 @@ class TaskController extends Controller
     public function index(Request $request)
     {
         $tasks = Task::latest()->with("user");
+
         if ($request->has('status')) {
             $tasks->where('status', $request->status);
         }
+
         if ($request->has('search')) {
             $tasks->where('title', 'like', '%' . $request->search . '%');
         }
+
         $tasks = $tasks->paginate(8);
+
+        // Use a closure for ownership check
+        $isOwner = function ($task) {
+            return $task->user_id === Auth::id();
+        };
+
+        // Apply ownership check to each task in the collection
+        $tasks->getCollection()->transform(function ($task) use ($isOwner) {
+            $task['is_owner'] = $isOwner($task);
+            return $task;
+        });
+
         return response()->json($tasks);
     }
 
