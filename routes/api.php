@@ -21,7 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::apiResource("task", TaskController::class);
-
+Route::post("SwitchTask/{task}",[TaskController::class , 'SwitchStatus']);
 Route::controller(AuthController::class)->group(function () {
     Route::middleware("guest")->group(function () {
         Route::post("register", "register");

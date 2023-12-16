@@ -105,4 +105,14 @@ class TaskController extends Controller
             "success" => "task delete with success"
         ]);
     }
+
+    public function SwitchStatus(Task $task)
+    {
+        $task->update([
+            'status' => $task->status == 0 ? 1 : 0
+        ]);
+        return response()->json([
+            "success" => "task update with success"
+        ]);
+    }
 }
