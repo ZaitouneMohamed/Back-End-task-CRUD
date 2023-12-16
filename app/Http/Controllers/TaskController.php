@@ -13,21 +13,22 @@ class TaskController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:sanctum');
+        // $this->middleware('auth:sanctum');
     }
 
     public function index(Request $request)
     {
-        $tasks = Task::latest()->with("user");
-        if ($request->status) {
+        $tasks = Task::with("user");
+        if ($request->has('status')) {
             $tasks->where('status', $request->status);
-        };
-        if ($request->search) {
+        }
+        if ($request->has('search')) {
             $tasks->where('title', 'like', '%' . $request->search . '%');
         }
         $tasks = $tasks->paginate(8);
         return response()->json($tasks);
     }
+
 
     /**
      * Store a newly created resource in storage.
