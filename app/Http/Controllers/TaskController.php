@@ -20,7 +20,21 @@ class TaskController extends Controller
 
     public function index(Request $request)
     {
-        $tasks = Task::FilterWithOwnership($request)->paginate(8);
+        $tasks = Task::latest()->with("user");
+
+        if ($request->has('status')) {
+            $tasks->where('status', $request->status);
+        }
+        $tasks = $tasks->paginate(8);
+
+        $isOwner = function ($task) {
+            return $task->user_id === Auth::id();
+        };
+
+        $tasks->getCollection()->transform(function ($task) use ($isOwner) {
+            $task['is_owner'] = $isOwner($task);
+            return $task;
+        });
 
         return response()->json($tasks);
     }
