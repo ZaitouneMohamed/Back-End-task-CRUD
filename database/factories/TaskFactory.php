@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,7 +21,7 @@ class TaskFactory extends Factory
             'title' => $this->faker->word(),
             'description' => $this->faker->paragraph(),
             'status' => $this->faker->numberBetween(0, 1),
-            'date' => $this->faker->date($format = 'Y-m-d', $min = 'now', $max = '+1 year'),
+            'date' => Carbon::now()->addDays($this->faker->numberBetween(1, 365))->format('Y-m-d'),
             'user_id' => $this->faker->numberBetween(1, 10),
         ];
     }
