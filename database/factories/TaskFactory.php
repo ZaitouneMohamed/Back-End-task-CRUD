@@ -20,7 +20,7 @@ class TaskFactory extends Factory
             'title' => $this->faker->sentence(),
             'description' => $this->faker->paragraph(),
             'status' => $this->faker->numberBetween(0, 1),
-            'date' => $this->faker->date($format = 'Y-m-d', $min = 'now'),
+            'date' => $this->faker->date($format = 'Y-m-d', $min = 'now', $max = '+1 year'),
             'user_id' => $this->faker->numberBetween(1, 10),
         ];
     }
