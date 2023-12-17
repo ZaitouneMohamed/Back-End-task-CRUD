@@ -17,6 +17,21 @@ class Task extends Model
         'date',
     ];
 
+    public function scopeFilterWithOwnership($query, $filters)
+    {
+        $query->when($filters['status'], function ($query, $status) {
+            $query->where('status', $status);
+        })
+            ->when($filters['search'], function ($query, $search) {
+                $query->where('title', 'like', '%' . $search . '%');
+            })
+            ->with("user")
+            ->get()
+            ->transform(function ($task) {
+                $task['is_owner'] = $task->user_id === auth()->id();
+                return $task;
+            });
+    }
 
     public function user()
     {
