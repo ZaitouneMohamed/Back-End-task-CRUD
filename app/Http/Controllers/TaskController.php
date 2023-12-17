@@ -71,8 +71,18 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
-        return response()->json($task);
+        // $this->authorize('view', $task);
+
+        $task->load('user'); // Ensure the 'user' relationship is loaded
+
+        $isOwner = auth()->user()->id === $task->user->id;
+
+        return response()->json([
+            'task' => $task,
+            'is_owner' => $isOwner,
+        ]);
     }
+
 
     /**
      * Update the specified resource in storage.
