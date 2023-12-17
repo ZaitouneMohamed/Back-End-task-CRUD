@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateTaskRequest;
+use App\Http\Requests\UpdateTaskRequest;
 use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -48,13 +50,8 @@ class TaskController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateTaskRequest $request)
     {
-        $request->validate([
-            'title' => 'required|unique:tasks,title|max:200',
-            'description' => 'required|max:2000',
-            'date' => 'required|date|after:today',
-        ]);
         Task::create([
             'title' => $request->title,
             'description' => $request->description,
@@ -87,13 +84,8 @@ class TaskController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Task $task)
+    public function update(UpdateTaskRequest $request, Task $task)
     {
-        $request->validate([
-            'title' => 'required|max:200',
-            'description' => 'required|max:2000',
-            'date' => 'required|date|after:today',
-        ]);
         $task->update([
             'title' => $request->title,
             'description' => $request->description,
