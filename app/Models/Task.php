@@ -22,9 +22,6 @@ class Task extends Model
         $query->when($filters['status'], function ($query, $status) {
             $query->where('status', $status);
         })
-            ->when($filters['search'], function ($query, $search) {
-                $query->where('title', 'like', '%' . $search . '%');
-            })
             ->with("user")
             ->get()
             ->transform(function ($task) {
